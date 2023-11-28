@@ -34,6 +34,11 @@
 /**
  * MMC driver parameters
  */
+
+static int cd_gpio_pin = -1;
+module_param(cd_gpio_pin, int, 0644);
+MODULE_PARM_DESC(cd_gpio_pin, "Card Detect GPIO pin number");
+
 #define MAX_SEGS		128	/* max count of sg */
 #define TIMEOUT_PERIOD		500	/* msc operation timeout detect period */
 #define PIO_THRESHOLD		64	/* use pio mode if data length < PIO_THRESHOLD */
@@ -1628,6 +1633,8 @@ static int __init jzmmc_msc_init(struct jzmmc_host *host)
 	return ret;
 }
 
+static int host_count = 0;
+
 static int __init jzmmc_gpio_init(struct jzmmc_host *host)
 {
 	struct card_gpio *card_gpio = host->pdata->gpio;
@@ -1635,6 +1642,10 @@ static int __init jzmmc_gpio_init(struct jzmmc_host *host)
 	int cd_port, cd_pin;
 
 	jz_gpio_set_func(36, GPIO_OUTPUT0);
+
+	if (host_count == 0 && cd_gpio_pin >= 0) {
+		card_gpio->cd.num = cd_gpio_pin;
+	}
 
 	if (card_gpio) {
 		if (card_gpio->cd.num > 0)
@@ -1715,6 +1726,9 @@ static int __init jzmmc_gpio_init(struct jzmmc_host *host)
 		set_bit(JZMMC_CARD_PRESENT, &host->flags);
 		break;
 	}
+
+	// Increment the host count
+	host_count++;
 
 	return ret;
 }
