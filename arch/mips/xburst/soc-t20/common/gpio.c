@@ -280,6 +280,7 @@ int jz_gpio_set_func(int gpio, enum gpio_function func)
 	gpio_set_func(jz, func, pin);
 	return 0;
 }
+EXPORT_SYMBOL(jz_gpio_set_func);
 
 int jzgpio_ctrl_pull(enum gpio_port port, int enable_pull,unsigned long pins)
 {
@@ -861,10 +862,6 @@ int __init setup_gpio_pins(void)
 		}
 		if (!strcmp(g->name,"msc1-pC") && !disable_gmac){
 			pr_info("Skipping MSC1_PC GPIO setup\n");
-			continue;
-		}
-		if ((!strcmp(g->name,"wyze-mmc-enable") || !strcmp(g->name,"wyze-mmc-detect")) && !disable_gmac){
-			pr_info("Skipping WYZE GPIO setup\n");
 			continue;
 		}
 
