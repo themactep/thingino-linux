@@ -36,9 +36,9 @@ struct jz_gpio_func_def platform_devio_array[] = {
 #ifdef CONFIG_JZMMC_V12_MMC0_PB_4BIT
 	MSC0_PORTB_4BIT,
 #endif
-#ifdef CONFIG_JZMMC_V12_MMC1_PB_4BIT
-	MSC1_PORTB,
-#endif
+//#ifdef CONFIG_JZMMC_V12_MMC1_PB_4BIT
+//	MSC1_PORTB,
+//#endif
 #ifdef CONFIG_JZMMC_V12_MMC1_PC_4BIT
 	MSC1_PORTC,
 #endif
@@ -1031,16 +1031,6 @@ static void get_isp_priv_mem(unsigned int *phyaddr, unsigned int *size)
 	*phyaddr = ispmem_base;
 	*size = ispmem_size;
 }
-
-int disable_gmac = 0;
-EXPORT_SYMBOL(disable_gmac);
-
-static int __init extras_parse(char *str)
-{
-	disable_gmac = 1;
-	return 0;
-}
-__setup("nogmac", extras_parse);
 
 #ifndef CONFIG_PROC_FS
 #error NOT config procfs

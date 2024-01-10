@@ -2392,11 +2392,8 @@ static struct platform_driver jz_mac_driver = {
 
 #define JZ_GMAC_BASE 0xb34b0000
 
-extern int disable_gmac;
-
 static int __init jz_mac_init(void)
 {
-if (!disable_gmac){
 #ifndef CONFIG_MDIO_GPIO
 	int ret;
 #endif
@@ -2422,11 +2419,6 @@ if (!disable_gmac){
 	return platform_driver_register(&jz_mac_driver);
 
 #endif
-}
-else{
-	pr_info("JZ GMAC disabled\n");
-	return -ENODEV;
-}
 }
 
 module_init(jz_mac_init);
