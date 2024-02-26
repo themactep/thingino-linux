@@ -14,7 +14,7 @@ typedef struct gpio_drive_strength_table {
 } gpio_drive_strength_table_t;
 
 static gpio_pull_table_t soc_gpio_pull_table[] = {
-// Dont force the pull state of the GPIO since we may not be using it for the TF cd pin
+// Don't force the pull state of the GPIO since we may not be using it for the TF cd pin
 //	{ GPIO_PB(27), GPIO_PULL_UP }, //TF cd
 };
 
@@ -33,7 +33,7 @@ int gpio_drive_strength_init(void)
 {
 	int i;
 	for (i = 0; i < ARRAY_SIZE(soc_gpio_drive_strength_table); i++) {
-		pr_debug("set gpio strength: %d-%d",
+		pr_debug("set gpio strength: %d-%d\n",
 			 soc_gpio_drive_strength_table[i].gpio_num,
 			 soc_gpio_drive_strength_table[i].drv_level);
 		jz_gpio_set_drive_strength(soc_gpio_drive_strength_table[i].gpio_num,
@@ -46,7 +46,7 @@ int gpio_pull_init(void)
 {
 	int i;
 	for (i = 0; i < ARRAY_SIZE(soc_gpio_pull_table); i++) {
-		pr_debug("set gpio pull: %d-%02x",
+		pr_debug("set gpio pull: %d-%02x\n",
 			 soc_gpio_pull_table[i].gpio_num,
 			 soc_gpio_pull_table[i].pull_status);
 		jz_gpio_set_func(soc_gpio_pull_table[i].gpio_num,
