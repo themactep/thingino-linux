@@ -18,7 +18,7 @@
 #include <linux/interrupt.h>
 #include <linux/dmaengine.h>
 
-#define NR_DMA_CHANNELS 32
+#define NR_DMA_CHANNELS  32
 
 #define CH_DSA  0x00
 #define CH_DTA  0x04
@@ -33,10 +33,10 @@
 
 #define DMAC    0x1000
 #define DIRQP   0x1004
+#define DDR     0x1008
+#define DDRS    0x100C
 #define DESIRQP 0x1010
 #define DIC     0x1014
-#define DDR 0x1008
-#define DDRS    0x100C
 #define DMACP   0x101C
 #define DSIRQP  0x1020
 #define DSIRQM  0x1024
@@ -50,45 +50,45 @@
 #define DMINT   0x103C
 
 /* MCU of PDMA */
-#define DMINT_S_IP      BIT(17)
-#define DMINT_N_IP      BIT(16)
+#define DMINT_S_IP           BIT(17)
+#define DMINT_N_IP           BIT(16)
 
-#define DMAC_HLT    BIT(3)
-#define DMAC_AR     BIT(2)
+#define DMAC_HLT             BIT(3)
+#define DMAC_AR              BIT(2)
 
-#define DCS_NDES    BIT(31)
-#define DCS_AR      BIT(4)
-#define DCS_TT      BIT(3)
-#define DCS_HLT     BIT(2)
-#define DCS_CTE     BIT(0)
-#define DCS_CDOA_SHF    (8)
-#define DCS_CDOA_MASK   (0xff << DCS_CDOA_SHF)
+#define DCS_NDES             BIT(31)
+#define DCS_AR               BIT(4)
+#define DCS_TT               BIT(3)
+#define DCS_HLT              BIT(2)
+#define DCS_CTE              BIT(0)
+#define DCS_CDOA_SHF         (8)
+#define DCS_CDOA_MASK        (0xff << DCS_CDOA_SHF)
 
-#define DCM_SAI     BIT(23)
-#define DCM_DAI     BIT(22)
-#define DCM_RDIL_MSK (0x7 << 16)
-#define DCM_RDIL_SHF 16
-#define DCM_SP_MSK  (0x3 << 14)
-#define DCM_SP_32   DCM_SP_MSK
-#define DCM_SP_16   BIT(15)
-#define DCM_SP_8    BIT(14)
-#define DCM_DP_MSK  (0x3 << 12)
-#define DCM_DP_32   DCM_DP_MSK
-#define DCM_DP_16   BIT(13)
-#define DCM_DP_8    BIT(12)
-#define DCM_TSZ_MSK (0x7 << 8)
-#define DCM_TSZ_SHF 8
-#define DCM_STDE    BIT(2)
-#define DCM_TIE     BIT(1)
-#define DCM_LINK    BIT(0)
+#define DCM_SAI              BIT(23)
+#define DCM_DAI              BIT(22)
+#define DCM_RDIL_MSK         (0x7 << 16)
+#define DCM_RDIL_SHF         16
+#define DCM_SP_MSK           (0x3 << 14)
+#define DCM_SP_32            DCM_SP_MSK
+#define DCM_SP_16            BIT(15)
+#define DCM_SP_8             BIT(14)
+#define DCM_DP_MSK           (0x3 << 12)
+#define DCM_DP_32            DCM_DP_MSK
+#define DCM_DP_16            BIT(13)
+#define DCM_DP_8             BIT(12)
+#define DCM_TSZ_MSK          (0x7 << 8)
+#define DCM_TSZ_SHF          8
+#define DCM_STDE             BIT(2)
+#define DCM_TIE              BIT(1)
+#define DCM_LINK             BIT(0)
 
-#define DCM_CH1_SRC_TCSM    (0x0 << 26)
-#define DCM_CH1_SRC_NEMC    (0x1 << 26)
-#define DCM_CH1_SRC_DDR     (0x2 << 26)
+#define DCM_CH1_SRC_TCSM     (0x0 << 26)
+#define DCM_CH1_SRC_NEMC     (0x1 << 26)
+#define DCM_CH1_SRC_DDR      (0x2 << 26)
 
-#define DCM_CH1_DST_TCSM    (0x0 << 24)
-#define DCM_CH1_DST_NEMC    (0x1 << 24)
-#define DCM_CH1_DST_DDR     (0x2 << 24)
+#define DCM_CH1_DST_TCSM     (0x0 << 24)
+#define DCM_CH1_DST_NEMC     (0x1 << 24)
+#define DCM_CH1_DST_DDR      (0x2 << 24)
 
 #define DCM_CH1_DDR_TO_NAND  (DCM_CH1_SRC_DDR  | DCM_CH1_DST_NEMC)
 #define DCM_CH1_NAND_TO_DDR  (DCM_CH1_SRC_NEMC | DCM_CH1_DST_DDR)
@@ -99,9 +99,9 @@
 #define DCM_CH1_TCSM_TO_DDR  (DCM_CH1_SRC_TCSM | DCM_CH1_DST_DDR)
 #define DCM_CH1_DDR_TO_TCSM  (DCM_CH1_SRC_DDR  | DCM_CH1_DST_TCSM)
 
-#define MCU_MSG_TYPE_NORMAL 0x1
-#define MCU_MSG_TYPE_INTC   0x2
-#define MCU_MSG_TYPE_INTC_MASKA 0x3
+#define MCU_MSG_TYPE_NORMAL      0x1
+#define MCU_MSG_TYPE_INTC        0x2
+#define MCU_MSG_TYPE_INTC_MASKA  0x3
 
 enum jzdma_req_type {
 #define _RTP(NAME) JZDMA_REQ_##NAME##_TX,JZDMA_REQ_##NAME##_RX
@@ -135,13 +135,13 @@ enum jzdma_req_type {
 enum jzdma_type {
     JZDMA_REQ_INVAL = 0,
 #define _RTP(NAME) JZDMA_REQ_##NAME = JZDMA_REQ_##NAME##_TX
-	_RTP(I2S1),
-	_RTP(I2S0),
-	JZDMA_REQ_AUTO = JZDMA_REQ_AUTO_TXRX,
-	JZDMA_REQ_SADC = JZDMA_REQ_SADC_RX,
-	_RTP(UART4),
-	_RTP(UART3),
-	_RTP(UART2),
+    _RTP(I2S1),
+    _RTP(I2S0),
+    JZDMA_REQ_AUTO = JZDMA_REQ_AUTO_TXRX,
+    JZDMA_REQ_SADC = JZDMA_REQ_SADC_RX,
+    _RTP(UART4),
+    _RTP(UART3),
+    _RTP(UART2),
     _RTP(UART1),
     _RTP(UART0),
     _RTP(SSI0),
@@ -188,62 +188,60 @@ struct dma_desc {
 };
 
 struct jzdma_channel {
-    int         id;
-    int         residue;
-    struct dma_chan     chan;
-    enum jzdma_type     type;
-    struct dma_async_tx_descriptor  tx_desc;
-    dma_cookie_t        last_completed;
-    dma_cookie_t        last_good;
-    struct tasklet_struct   tasklet;
-    struct tasklet_struct   link_tasklet;
-    spinlock_t      lock;
+    int id;
+    int residue;
+    struct dma_chan chan;
+    enum jzdma_type type;
+    struct dma_async_tx_descriptor tx_desc;
+    dma_cookie_t last_completed;
+    dma_cookie_t last_good;
+    struct tasklet_struct tasklet;
+    struct tasklet_struct link_tasklet;
+    spinlock_t lock;
 #define CHFLG_SLAVE     BIT(0)
-    unsigned short      flags;
-    unsigned short      status;
-    unsigned long       dcs_saved;
-    struct dma_desc     *desc;
-    dma_addr_t      desc_phys;
-    unsigned short      desc_nr;
-    unsigned short      desc_max;
-    struct scatterlist  *sgl;
-    unsigned long       sg_len;
-    unsigned short      last_sg;
+    unsigned short flags;
+    unsigned short status;
+    unsigned long dcs_saved;
+    struct dma_desc *desc;
+    dma_addr_t desc_phys;
+    unsigned short desc_nr;
+    unsigned short desc_max;
+    struct scatterlist *sgl;
+    unsigned long sg_len;
+    unsigned short last_sg;
 #define FAKECYCLIC_ACTIVE (1 << 15)
 #define FAKECYCLIC_POSSIBLE (1 << 14)
 #define FAKECYCLIC_IDX 0x3fff
-    unsigned short      fake_cyclic;
-    unsigned long       tx_dcm_def;
-    unsigned long       rx_dcm_def;
+    unsigned short fake_cyclic;
+    unsigned long tx_dcm_def;
+    unsigned long rx_dcm_def;
     struct dma_slave_config *config;
-    void __iomem        *iomem;
+    void __iomem *iomem;
     struct jzdma_master *master;
 };
 
 enum channel_status {
-    STAT_STOPED,STAT_SUBED,STAT_PREPED,STAT_RUNNING,
+    STAT_STOPED, STAT_SUBED, STAT_PREPED, STAT_RUNNING,
 };
 
 struct jzdma_master {
-    struct device       *dev;
-    void __iomem        *iomem;
-    struct clk      *clk;
-    int         irq;
-    int                     irq_pdmam;   /* irq_pdmam for PDMAM irq */
-    struct dma_device   dma_device;
-    enum jzdma_type     *map;
-    struct irq_chip     irq_chip;
-    struct jzdma_channel    channel[NR_DMA_CHANNELS];
+    struct device *dev;
+    void __iomem *iomem;
+    struct clk *clk;
+    int irq;
+    int irq_pdmam;   /* irq_pdmam for PDMAM irq */
+    struct dma_device dma_device;
+    enum jzdma_type *map;
+    struct irq_chip irq_chip;
+    struct jzdma_channel channel[NR_DMA_CHANNELS];
 };
 
-static inline struct device *chan2dev(struct dma_chan *chan)
-{
-    return &chan->dev->device;
+static inline struct device *chan2dev(struct dma_chan *chan) {
+	return &chan->dev->device;
 }
 
-static inline struct jzdma_channel *to_jzdma_chan(struct dma_chan *chan)
-{
-    return container_of(chan, struct jzdma_channel, chan);
+static inline struct jzdma_channel *to_jzdma_chan(struct dma_chan *chan) {
+	return container_of(chan, struct jzdma_channel, chan);
 }
 
 int jzdma_dump(struct dma_chan *chan);

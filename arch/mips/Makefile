@@ -194,7 +194,7 @@ endif
 include $(srctree)/arch/mips/Kbuild.platforms
 
 ifdef CONFIG_PHYSICAL_START
-load-y					= $(CONFIG_PHYSICAL_START)
+load-y				= $(CONFIG_PHYSICAL_START)
 endif
 entry-y				= 0x$(shell $(NM) vmlinux 2>/dev/null \
 					| grep "\bkernel_entry\b" | cut -f1 -d \ )
