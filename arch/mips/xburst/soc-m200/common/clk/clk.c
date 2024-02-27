@@ -323,7 +323,7 @@ static int enable_write(struct file *file, const char __user *buffer,size_t coun
 
 	struct clk *clk = ((struct seq_file *)file->private_data)->private;
 	if(clk) {
-        struct clk *tmp = clk_get(NULL,clk->name);
+	struct clk *tmp = clk_get(NULL,clk->name);
 		if(count && (buffer[0] == '1')){
 			clk_enable(tmp);
 		}

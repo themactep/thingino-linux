@@ -97,7 +97,7 @@ struct jz_gpio_func_def platform_devio_array[] = {
 #endif
 #endif
 
-#if defined( CONFIG_JZ_DMIC_V12 ) || defined ( CONFIG_JZ_TS_DMIC )
+#if defined(CONFIG_JZ_DMIC_V12) || defined (CONFIG_JZ_TS_DMIC)
 	DMIC_PORTC,
 #endif
 
@@ -557,7 +557,7 @@ struct platform_device jz_codec_device = {
 #endif
 #endif
 
-#ifdef CONFIG_JZ_TS_DMIC
+#if defined(CONFIG_JZ_TS_DMIC)
 static struct resource mic_resources[] = {
     /**
      * dmic resource
@@ -648,7 +648,6 @@ struct platform_device jz_alsa_device = {
 	.dev = {},
 };
 #endif /* end of ALSA platform devices */
-
 
 static u64 jz_ssi_dmamask =  ~(u32)0;
 #define DEF_SSI(NO)							\
@@ -903,7 +902,10 @@ struct platform_device jz_pwm_sdk_device = {
 
 static struct jzpwm_platform_data jzpwm_pdata = {
 	.pwm_gpio = {
-			GPIO_PB(17),GPIO_PB(18),GPIO_PC(8),GPIO_PC(9),
+			GPIO_PB(17),
+			GPIO_PB(18),
+			GPIO_PC(8),
+			GPIO_PC(9),
 	},
 };
 
@@ -960,4 +962,3 @@ static int __init ispmem_parse(char *str)
 	return 1;
 }
 __setup("ispmem=", ispmem_parse);
-

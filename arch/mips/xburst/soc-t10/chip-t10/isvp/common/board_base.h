@@ -1,5 +1,6 @@
 #ifndef __BOARD_BASE_H__
 #define __BOARD_BASE_H__
+
 #include <linux/i2c.h>
 #include <linux/pwm.h>
 
