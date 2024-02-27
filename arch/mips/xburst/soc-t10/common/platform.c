@@ -85,7 +85,7 @@ struct jz_gpio_func_def platform_devio_array[] = {
 	OTG_DRVVUS,
 #endif
 
-#ifdef CONFIG_SPI0_PC
+#ifdef CONFIG_JZ_SPI0_PC
 	SSI0_PORTC,
 #endif
 
