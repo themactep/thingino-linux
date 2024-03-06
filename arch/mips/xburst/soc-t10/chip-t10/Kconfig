@@ -4,24 +4,24 @@ choice
 	depends on CHIP_T10
 	default PLATFORM_T10_ISVP
 
-config BOARD_MUSCA
-	bool "Musca"
-
 config PLATFORM_T10_ISVP
 	bool "isvp"
+
+config BOARD_MUSCA
+	bool "Musca"
 
 endchoice
 
 config PRODUCT_NAME
 	string
-	default "musca" if BOARD_MUSCA
 	default "isvp" if PLATFORM_T10_ISVP
+	default "musca" if BOARD_MUSCA
 
-
-if BOARD_MUSCA
-source "arch/mips/xburst/soc-t10/chip-t10/musca/Kconfig"
-endif
 
 if PLATFORM_T10_ISVP
 source "arch/mips/xburst/soc-t10/chip-t10/isvp/Kconfig"
+endif
+
+if BOARD_MUSCA
+source "arch/mips/xburst/soc-t10/chip-t10/musca/Kconfig"
 endif

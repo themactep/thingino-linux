@@ -19,6 +19,7 @@ static struct platform_device jz4780_spi_gpio_device = {
 		.platform_data = &jz4780_spi_gpio_data,
 	},
 };
+
 #ifdef CONFIG_JZ_SPI0
 static struct spi_board_info jz_spi0_board_info[] = {
 	[0] = {
@@ -29,6 +30,7 @@ static struct spi_board_info jz_spi0_board_info[] = {
 	},
 };
 #endif
+
 #ifdef CONFIG_JZ_SPI1
 static struct spi_board_info jz_spi1_board_info[] = {
 	[0] = {

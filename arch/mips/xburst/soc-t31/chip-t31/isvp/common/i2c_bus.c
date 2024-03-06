@@ -25,6 +25,7 @@ static struct pca953x_platform_data dorado_pca953x_pdata = {
 	.irq_n  = PCA9539_IRQ_N,
 };
 #endif
+
 #if (defined(CONFIG_I2C_GPIO) || defined(CONFIG_I2C1_V12_JZ))
 struct i2c_board_info jz_i2c1_devs[] __initdata = {
 #ifdef CONFIG_GPIO_PCA953X
@@ -33,6 +34,7 @@ struct i2c_board_info jz_i2c1_devs[] __initdata = {
 		.platform_data  = &dorado_pca953x_pdata,
 	},
 #endif
+
 #if 0
 #ifdef CONFIG_AK4951_CODEC
 	{
@@ -43,6 +45,7 @@ struct i2c_board_info jz_i2c1_devs[] __initdata = {
 #endif
 };
 #endif  /*I2C1*/
+
 #if (defined(CONFIG_I2C_GPIO) || defined(CONFIG_I2C2_V12_JZ))
 struct i2c_board_info jz_i2c2_devs[] __initdata = {
 #if 0
@@ -62,15 +65,15 @@ struct i2c_board_info jz_i2c2_devs[] __initdata = {
 };
 #endif  /*I2C1*/
 
-#if	(defined(CONFIG_SOFT_I2C0_GPIO_V12_JZ) || defined(CONFIG_I2C0_V12_JZ))
+#if (defined(CONFIG_SOFT_I2C0_GPIO_V12_JZ) || defined(CONFIG_I2C0_V12_JZ))
 int jz_i2c0_devs_size = ARRAY_SIZE(jz_i2c0_devs);
 #endif
 
-#if	(defined(CONFIG_SOFT_I2C1_GPIO_V12_JZ) || defined(CONFIG_I2C1_V12_JZ))
+#if (defined(CONFIG_SOFT_I2C1_GPIO_V12_JZ) || defined(CONFIG_I2C1_V12_JZ))
 int jz_i2c1_devs_size = ARRAY_SIZE(jz_i2c1_devs);
 #endif
 
-#if	(defined(CONFIG_SOFT_I2C2_GPIO_V12_JZ) || defined(CONFIG_I2C2_V12_JZ))
+#if (defined(CONFIG_SOFT_I2C2_GPIO_V12_JZ) || defined(CONFIG_I2C2_V12_JZ))
 int jz_i2c2_devs_size = ARRAY_SIZE(jz_i2c2_devs);
 #endif
 /*

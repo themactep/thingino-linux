@@ -107,7 +107,7 @@ static struct jz_platform_device platform_devices_array[] __initdata = {
 #endif
 
 #ifdef CONFIG_JZ_TS_DMIC
-	DEF_DEVICE(&mic_device,0,0),
+	DEF_DEVICE(&mic_device, 0, 0),
 #endif
 
 #ifdef CONFIG_SND_ALSA_INGENIC
@@ -153,7 +153,7 @@ static struct jz_platform_device platform_devices_array[] __initdata = {
 static int __init board_base_init(void)
 {
 	int pdevices_array_size, i;
-	
+
 	pdevices_array_size = ARRAY_SIZE(platform_devices_array);
 	for(i = 0; i < pdevices_array_size; i++) {
 		if(platform_devices_array[i].size)

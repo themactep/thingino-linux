@@ -15,12 +15,14 @@
 #include <linux/pwm.h>
 #include "board_base.h"
 #include <mach/jzssi.h>
+
 struct jz_platform_device
 {
 	struct platform_device *pdevices;
 	void *pdata;
 	int size;
 };
+
 static struct jz_platform_device platform_devices_array[] __initdata = {
 #define DEF_DEVICE(DEVICE, DATA, SIZE)	\
 	{ .pdevices = DEVICE,	\
@@ -90,7 +92,6 @@ static struct jz_platform_device platform_devices_array[] __initdata = {
 #ifdef CONFIG_FB_JZ_V14
         DEF_DEVICE(&jz_fb_device, &jzfb_data, sizeof(struct jzfb_platform_data)),
 #endif
-
 
 #ifdef CONFIG_BCM_PM_CORE
 	DEF_DEVICE(&bcm_power_platform_device, 0, 0),

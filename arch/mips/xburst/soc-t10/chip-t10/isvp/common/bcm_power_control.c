@@ -51,7 +51,7 @@ static void set_pin_status(int bt_power_state)
 
 		/*set PCM0_DO, PCM0_CLK, PCM0_SYN, PCM0_DI 4 pins to OUTPUT_LOW*/
 		jzgpio_set_func(GPIO_PORT_F, GPIO_OUTPUT0, 0xF << 12);
-	}else{
+	} else {
 #if defined(GPIO_BT_RST_N)
 		jzgpio_set_func(GPIO_BT_RST_N / 32, GPIO_OUTPUT0, 1 << (GPIO_BT_RST_N % 32));
 #endif
@@ -104,16 +104,16 @@ static struct bt_rfkill_platform_data  bt_gpio_data = {
 };
 
 struct platform_device bt_power_device  = {
-	.name = "bt_power", 
-	.id = -1, 
+	.name = "bt_power",
+	.id = -1,
 	.dev   = {
 		.platform_data = &bt_gpio_data,
 	},
 };
 
 struct platform_device bluesleep_device = {
-	.name = "bluesleep", 
-	.id = -1, 
+	.name = "bluesleep",
+	.id = -1,
 	.dev   = {
 		.platform_data = &bt_gpio_data,
 	},

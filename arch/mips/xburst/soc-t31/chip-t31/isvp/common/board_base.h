@@ -1,5 +1,6 @@
 #ifndef __BOARD_BASE_H__
 #define __BOARD_BASE_H__
+
 #include <linux/i2c.h>
 #include <linux/pwm.h>
 #include <linux/spi/spi.h>
@@ -7,21 +8,22 @@
 #include <board.h>
 
 #include <mach/jzfb.h>
+
 #ifdef CONFIG_KEYBOARD_GPIO
 extern struct platform_device jz_button_device;
 #endif
 #ifdef CONFIG_INV_MPU_IIO
 extern struct mpu_platform_data mpu9250_platform_data;
 #endif
-#if (defined(CONFIG_I2C_GPIO) || defined(CONFIG_I2C0_V12_JZ))
+#if defined(CONFIG_I2C_GPIO) || defined(CONFIG_I2C0_V12_JZ)
 extern struct i2c_board_info jz_i2c0_devs[];
 extern int jz_i2c0_devs_size;
 #endif
-#if (defined(CONFIG_I2C_GPIO) || defined(CONFIG_I2C1_V12_JZ))
+#if defined(CONFIG_I2C_GPIO) || defined(CONFIG_I2C1_V12_JZ)
 extern struct i2c_board_info jz_i2c1_devs[];
 extern int jz_i2c1_devs_size;
 #endif
-#if (defined(CONFIG_I2C_GPIO) || defined(CONFIG_I2C2_V12_JZ))
+#if defined(CONFIG_I2C_GPIO) || defined(CONFIG_I2C2_V12_JZ)
 extern struct i2c_board_info jz_i2c2_devs[];
 extern int jz_i2c2_devs_size;
 #endif
