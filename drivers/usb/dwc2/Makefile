@@ -1,35 +1,29 @@
-ccflags-$(CONFIG_USB_DWC2_DEBUG)	:= -DDEBUG
+# SPDX-License-Identifier: GPL-2.0
+ccflags-$(CONFIG_USB_DWC2_DEBUG)	+= -DDEBUG
 ccflags-$(CONFIG_USB_DWC2_VERBOSE)	+= -DVERBOSE_DEBUG
 
-obj-$(CONFIG_USB_JZ_DWC2)			+= dwc2.o
+obj-$(CONFIG_USB_DWC2)			+= dwc2.o
+dwc2-y					:= core.o core_intr.o platform.o drd.o
+dwc2-y					+= params.o
 
-dwc2-y	:= core.o
-
-ifneq ($(CONFIG_USB_DWC2_DEVICE_ONLY),y)
-dwc2-y	+= host-ddma.o rh.o
+ifneq ($(filter y,$(CONFIG_USB_DWC2_HOST) $(CONFIG_USB_DWC2_DUAL_ROLE)),)
+	dwc2-y				+= hcd.o hcd_intr.o
+	dwc2-y				+= hcd_queue.o hcd_ddma.o
 endif
 
-ifneq ($(CONFIG_USB_DWC2_HOST_ONLY),y)
-dwc2-y	+= gadget.o ep0.o
+ifneq ($(filter y,$(CONFIG_USB_DWC2_PERIPHERAL) $(CONFIG_USB_DWC2_DUAL_ROLE)),)
+	dwc2-y       			+= gadget.o
 endif
 
 ifneq ($(CONFIG_DEBUG_FS),)
 	dwc2-y				+= debugfs.o
 endif
 
-##
-# Platform-specific glue layers go here
-#
-# NOTICE: Make sure your glue layer doesn't depend on anything
-# which is arch-specific and that it compiles on all situations.
-#
-# We want to keep this requirement in order to be able to compile
-# the entire driver (with all its glue layers) on several architectures
-# and make sure it compiles fine. This will also help with allmodconfig
-# and allyesconfig builds.
-#
-# The only exception is the PCI glue layer, but that's only because
-# PCI doesn't provide nops if CONFIG_PCI isn't enabled.
-##
+# NOTE: The previous s3c-hsotg peripheral mode only driver has been moved to
+# this location and renamed gadget.c. When building for dynamically linked
+# modules, dwc2.ko will get built for host mode, peripheral mode, and dual-role
+# mode. The PCI bus interface module will called dwc2_pci.ko and the platform
+# interface module will be called dwc2_platform.ko.
 
-obj-$(CONFIG_USB_JZ_DWC2)		+= dwc2_jz.o
+obj-$(CONFIG_USB_DWC2_PCI)		+= dwc2_pci.o
+dwc2_pci-y				:= pci.o

@@ -12,19 +12,25 @@
 
 #include <linux/const.h>
 
+#include <asm/mipsregs.h>
+
+#ifndef IO_SPACE_LIMIT
+#define IO_SPACE_LIMIT 0xffff
+#endif
+
 /*
  * This gives the physical RAM offset.
  */
-#ifndef PHYS_OFFSET
-#define PHYS_OFFSET		_AC(0, UL)
-#endif
+#ifndef __ASSEMBLY__
+# if defined(CONFIG_MIPS_AUTO_PFN_OFFSET)
+#  define PHYS_OFFSET		((unsigned long)PFN_PHYS(ARCH_PFN_OFFSET))
+# elif !defined(PHYS_OFFSET)
+#  define PHYS_OFFSET		_AC(0, UL)
+# endif
+#endif /* __ASSEMBLY__ */
 
 #ifdef CONFIG_32BIT
-#ifdef CONFIG_KVM_GUEST
-#define CAC_BASE		_AC(0x40000000, UL)
-#else
 #define CAC_BASE		_AC(0x80000000, UL)
-#endif
 #ifndef IO_BASE
 #define IO_BASE			_AC(0xa0000000, UL)
 #endif
@@ -33,11 +39,7 @@
 #endif
 
 #ifndef MAP_BASE
-#ifdef CONFIG_KVM_GUEST
-#define MAP_BASE		_AC(0x60000000, UL)
-#else
 #define MAP_BASE		_AC(0xc0000000, UL)
-#endif
 #endif
 
 /*
@@ -47,16 +49,14 @@
 #define HIGHMEM_START		_AC(0x20000000, UL)
 #endif
 
+#define CKSEG0ADDR_OR_64BIT(x)	CKSEG0ADDR(x)
+#define CKSEG1ADDR_OR_64BIT(x)	CKSEG1ADDR(x)
 #endif /* CONFIG_32BIT */
 
 #ifdef CONFIG_64BIT
 
 #ifndef CAC_BASE
-#ifdef CONFIG_DMA_NONCOHERENT
-#define CAC_BASE		_AC(0x9800000000000000, UL)
-#else
-#define CAC_BASE		_AC(0xa800000000000000, UL)
-#endif
+#define CAC_BASE	PHYS_TO_XKPHYS(read_c0_config() & CONF_CM_CMASK, 0)
 #endif
 
 #ifndef IO_BASE
@@ -84,6 +84,8 @@
 #define TO_CAC(x)		(CAC_BASE   | ((x) & TO_PHYS_MASK))
 #define TO_UNCAC(x)		(UNCAC_BASE | ((x) & TO_PHYS_MASK))
 
+#define CKSEG0ADDR_OR_64BIT(x)	TO_CAC(x)
+#define CKSEG1ADDR_OR_64BIT(x)	TO_UNCAC(x)
 #endif /* CONFIG_64BIT */
 
 /*
@@ -95,21 +97,6 @@
 
 #ifndef FIXADDR_TOP
 #define FIXADDR_TOP		((unsigned long)(long)(int)0xfffe0000)
-#endif
-
-#ifndef in_module
-/*
- * If the Instruction Pointer is in module space (0xc0000000), return true;
- * otherwise, it is in kernel space (0x80000000), return false.
- *
- * FIXME: This will not work when the kernel space and module space are the
- * same. If they are the same, we need to modify scripts/recordmcount.pl,
- * ftrace_make_nop/call() and the other related parts to ensure the
- * enabling/disabling of the calling site to _mcount is right for both kernel
- * and module.
- *
- */
-#define in_module(ip)   (((unsigned long)ip) & 0x40000000)
 #endif
 
 #endif /* __ASM_MACH_GENERIC_SPACES_H */

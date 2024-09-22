@@ -15,10 +15,11 @@
 #include <linux/platform_device.h>
 #include <linux/stop_machine.h>
 #include <linux/io.h>
+#include <linux/of_address.h>
 #include <asm/machdep.h>
 #include <asm/cell-regs.h>
 
-#include "edac_core.h"
+#include "edac_module.h"
 
 struct cell_edac_priv
 {
@@ -133,8 +134,7 @@ static void cell_edac_init_csrows(struct mem_ctl_info *mci)
 	int				j;
 	u32				nr_pages;
 
-	for (np = NULL;
-	     (np = of_find_node_by_name(np, "memory")) != NULL;) {
+	for_each_node_by_name(np, "memory") {
 		struct resource r;
 
 		/* We "know" that the Cell firmware only creates one entry
@@ -162,6 +162,7 @@ static void cell_edac_init_csrows(struct mem_ctl_info *mci)
 			csrow->first_page, nr_pages);
 		break;
 	}
+	of_node_put(np);
 }
 
 static int cell_edac_probe(struct platform_device *pdev)
@@ -233,21 +234,19 @@ static int cell_edac_probe(struct platform_device *pdev)
 	return 0;
 }
 
-static int cell_edac_remove(struct platform_device *pdev)
+static void cell_edac_remove(struct platform_device *pdev)
 {
 	struct mem_ctl_info *mci = edac_mc_del_mc(&pdev->dev);
 	if (mci)
 		edac_mc_free(mci);
-	return 0;
 }
 
 static struct platform_driver cell_edac_driver = {
 	.driver		= {
 		.name	= "cbe-mic",
-		.owner	= THIS_MODULE,
 	},
 	.probe		= cell_edac_probe,
-	.remove		= cell_edac_remove,
+	.remove_new	= cell_edac_remove,
 };
 
 static int __init cell_edac_init(void)

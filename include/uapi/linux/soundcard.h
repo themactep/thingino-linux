@@ -566,11 +566,6 @@ typedef struct {
 #	define AFMT_MPEG		0x00000200	/* MPEG (2) audio */
 #	define AFMT_AC3		0x00000400	/* Dolby Digital AC3 */
 
-#define AFMT_S24_LE              0x00000800      /* Little endian signed 24*/
-#define AFMT_S24_BE              0x00001000      /* Big endian signed 24 */
-#define AFMT_U24_LE              0x00002000      /* Little endian unsigned 24 */
-#define AFMT_U24_BE              0x00004000      /* Big endian unsigned 24 */
-
 /*
  * Buffer status queries.
  */
@@ -1056,7 +1051,7 @@ typedef struct mixer_vol_table {
  *	the GPL version of OSS-4.x and build against that version
  *	of the header.
  *
- *	We redefine the extern keyword so that make headers_check
+ *	We redefine the extern keyword so that usr/include/headers_check.pl
  *	does not complain about SEQ_USE_EXTBUF.
  */
 #define SEQ_DECLAREBUF()		SEQ_USE_EXTBUF()
