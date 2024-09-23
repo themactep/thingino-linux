@@ -1,0 +1,361 @@
+menuconfig SOC_TYPE
+	tristate "SOC type"
+	depends on MACH_XBURST
+	default y
+
+if SOC_TYPE
+choice
+	prompt "SOC types"
+	depends on MACH_XBURST
+	default SOC_X1000
+
+config SOC_4780
+	bool "4780"
+	select GPIOLIB
+	select IRQ_CPU
+	select DMA_NONCOHERENT
+	select SYS_HAS_CPU_MIPS32_R1
+	select SYS_SUPPORTS_32BIT_KERNEL
+	select SYS_SUPPORTS_LITTLE_ENDIAN
+	select NR_CPUS_DEFAULT_2
+	select SYS_SUPPORTS_SMP
+
+config SOC_4775
+	bool "4775"
+	select GPIOLIB
+	select IRQ_CPU
+	select DMA_NONCOHERENT
+	select SYS_HAS_CPU_MIPS32_R1
+	select SYS_SUPPORTS_32BIT_KERNEL
+	select SYS_SUPPORTS_LITTLE_ENDIAN
+
+config SOC_M200
+	bool "m200"
+	select GPIOLIB
+	select IRQ_CPU
+	select DMA_NONCOHERENT
+	select SYS_HAS_CPU_MIPS32_R1
+	select SYS_SUPPORTS_32BIT_KERNEL
+	select SYS_SUPPORTS_LITTLE_ENDIAN
+
+config SOC_X1000
+	bool "x1000 socs"
+	select INGENIC_INTC
+	select CLK_X1000
+	select CLKSRC_OF
+	select PINCTRL
+	select BUILTIN_DTB
+	select CLKDEV_LOOKUP
+	select PINCTRL_INGENIC
+	select CLKSRC_INGENIC_SYS_OST
+
+config SOC_X1800
+	bool "x1800 socs"
+	select INGENIC_INTC
+	select CLK_X1800
+	select CLKSRC_OF
+	select PINCTRL
+	select BUILTIN_DTB
+	select CLKDEV_LOOKUP
+	select PINCTRL_INGENIC
+	select PINCTRL_INGENIC_LEGACY_GPIO
+	select CLKSRC_INGENIC_SYS_OST
+	select XBURST_MXUV2
+
+config SOC_T10
+	bool "t10"
+	select GPIOLIB
+	select IRQ_CPU
+	select DMA_NONCOHERENT
+	select SYS_HAS_CPU_MIPS32_R1
+	select SYS_SUPPORTS_32BIT_KERNEL
+	select SYS_SUPPORTS_LITTLE_ENDIAN
+
+config SOC_T15
+	bool "t15"
+	select GPIOLIB
+	select IRQ_CPU
+	select DMA_NONCOHERENT
+	select SYS_HAS_CPU_MIPS32_R1
+	select SYS_SUPPORTS_32BIT_KERNEL
+	select SYS_SUPPORTS_LITTLE_ENDIAN
+
+config SOC_T20
+	bool "t20"
+	select GPIOLIB
+	select IRQ_CPU
+	select DMA_NONCOHERENT
+	select SYS_HAS_CPU_MIPS32_R1
+	select SYS_SUPPORTS_32BIT_KERNEL
+	select SYS_SUPPORTS_LITTLE_ENDIAN
+
+config SOC_T21
+	bool "t21"
+	select GPIOLIB
+	select IRQ_CPU
+	select DMA_NONCOHERENT
+	select SYS_HAS_CPU_MIPS32_R1
+	select SYS_SUPPORTS_32BIT_KERNEL
+	select SYS_SUPPORTS_LITTLE_ENDIAN
+
+config SOC_T23
+	bool "t23"
+	select GPIOLIB
+	select IRQ_CPU
+	select DMA_NONCOHERENT
+	select SYS_HAS_CPU_MIPS32_R1
+	select SYS_SUPPORTS_32BIT_KERNEL
+	select SYS_SUPPORTS_LITTLE_ENDIAN
+
+config SOC_T30
+	bool "t30"
+	select GPIOLIB
+	select IRQ_CPU
+	select DMA_NONCOHERENT
+	select SYS_HAS_CPU_MIPS32_R1
+	select SYS_SUPPORTS_32BIT_KERNEL
+	select SYS_SUPPORTS_LITTLE_ENDIAN
+
+config SOC_T31
+	bool "t31"
+	select IRQ_INGENIC_CPU
+	select CLK_T31
+	select INGENIC_INTC
+	select PINCTRL
+	select PINCTRL_INGENIC
+	select CLKSRC_OF
+	select CLKDEV_LOOKUP
+	select CLKSRC_INGENIC_SYS_OST
+	select XBURST_MXUV2
+
+endchoice
+
+
+choice
+	prompt "device tree select"
+
+#if SOC_4775
+#source "arch/mips/xburst/soc-4775/Kconfig"
+#endif
+
+#if SOC_4780
+#source "arch/mips/xburst/soc-4780/Kconfig"
+#endif
+
+#if SOC_M200
+#source "arch/mips/xburst/soc-m200/Kconfig"
+#endif
+
+#if SOC_T10
+#source "arch/mips/xburst/soc-t10/Kconfig"
+#endif
+
+#if SOC_T15
+#source "arch/mips/xburst/soc-t15/Kconfig"
+#endif
+
+#if SOC_T20
+#source "arch/mips/xburst/soc-t20/Kconfig"
+#endif
+
+#if SOC_T21
+#source "arch/mips/xburst/soc-t21/Kconfig"
+#endif
+
+#if SOC_T23
+#source "arch/mips/xburst/soc-t23/Kconfig"
+#endif
+
+#if SOC_T30
+#source "arch/mips/xburst/soc-t30/Kconfig"
+#endif
+
+#if SOC_T31_LEGACY
+#source "arch/mips/xburst/soc-t31-legacy/Kconfig"
+#endif
+
+config DT_T31_SWAN
+	depends on SOC_T31
+	bool "t31 swan"
+
+config DT_HALLEY2_V20
+	depends on SOC_X1000
+	bool "halley2 v20"
+
+endchoice
+
+config INGENIC_BUILTIN_DTB
+	select BUILTIN_DTB
+	depends on MACH_XBURST
+	bool "Ingenic Device Tree build into Kernel."
+	default y
+
+config DT_T31_MODULE_BASE_DTS_FILE
+	string "dts file for T40 module driver"
+	depends on DT_T31_MODULE_BASE
+	default "shark.dts"
+	help
+	  the dts file location is arch/mips/boot/dts/ingenic/
+
+config RAW_BOOT
+	bool "Raw Boot Kernel"
+	select BOOT_RAW
+
+config KERNEL_6_11
+	bool "kernel version 6.11"
+	default y
+
+config EXTAL_CLOCK
+	depends on MACH_XBURST
+	int "extal clock in MHz"
+	default 24
+
+config FPGA_TEST
+	depends on MACH_XBURST
+	bool "FPGA_TEST"
+
+config PM_POWERDOWN_P0
+	depends on MACH_XBURST
+	bool "power down xburst cpu core when sleep"
+	default y
+
+config SUSPEND_WDT
+	depends on PM_POWERDOWN_P0
+	bool "watch dog for power down p0 sleep"
+
+config CPU_SUSPEND_TO_IDLE
+	depends on !PM_POWERDOWN_P0
+	bool "cpu enter idle mode when sleep"
+
+config RESET_KEEP_POWER
+	depends on MACH_XBURST
+	bool "keep power when press reset key"
+	default y
+
+config HIBERNATE_RESET
+	depends on MACH_XBURST
+	bool "use hibernate reset instead watch dog reset"
+
+config TRAPS_USE_TCSM_CHECK
+	depends on TRAPS_USE_TCSM
+	bool "check tcsm when power resume"
+
+config CPUFREQ_CHANGE_VCORE
+	depends on CPU_FREQ
+	bool "change vcore voltage when cpu frequency has changed"
+
+config CPUFREQ_PARAMETER
+	depends on CPU_FREQ
+	bool "CPU freq parameters"
+	help
+	  Board level cpufreq parameter definitions. If you are NOT sure about then,
+	  DON'T say Y here and you will get default define.
+
+config TVOL_L
+	depends on CPUFREQ_PARAMETER
+	int "tVOL_L"
+	default 30
+	help
+	  ms of voltage latency.
+
+config TVOL_H
+	depends on CPUFREQ_PARAMETER
+	int "tVOL_H"
+	default 500
+	help
+	  ms of voltage hold time.
+
+config DETE_PERIOD
+	depends on CPUFREQ_PARAMETER
+	int "DETE_PERIOD"
+	default 30000
+	help
+	  freq detect period.
+
+config HIGH_THRESHOLD
+	depends on CPUFREQ_PARAMETER
+	int "HIGH_THRESHOLD"
+	default 30
+	help
+	  percent of high load threshold.
+
+config HIFREQ_MINUTE
+	depends on CPUFREQ_PARAMETER
+	int "HIFREQ_MINUTE"
+	default 30
+	help
+	  high freq last time.
+
+config MAX_APLL_FREQ
+	depends on CPUFREQ_PARAMETER
+	int "MAX_APLL_FREQ"
+	default 1824000
+	help
+	  max cpufreq from APLL.
+
+config LOW_APLL_FREQ
+	depends on CPUFREQ_PARAMETER
+	int "LOW_APLL_FREQ"
+	default 1300000
+	help
+	  low cpufreq from APLL.
+
+config APLL_FREQ_STEP
+	depends on CPUFREQ_PARAMETER
+	int "APLL_FREQ_STEP"
+	default 96000
+	help
+	  step of APLL freq.
+
+config SUSPEND_SUPREME_DEBUG
+	depends on PM
+	bool "superme debug for suspend"
+
+config RECONFIG_SLEEP_GPIO
+	depends on PM
+	bool "reconfig gpio sleep state."
+
+config JZRISC_PEP
+	bool "enable page execution protection"
+	default y
+
+config ARM_ELF_SUPPORT
+	bool "disable arm elf check for mips platform - magic code support depend on this"
+	default y
+
+config INGENIC_GPT_CHECK
+	depends on MACH_XBURST
+	bool "The physical space is larger than the virtual space"
+	default y
+
+config SUSPEND_TEST
+	bool "auto suspend test"
+
+config SUSPEND_ALARM_TIME
+	int "suspend alarm time(second)"
+	depends on SUSPEND_TEST
+	default 2
+
+config XBURST_MXUV2
+	bool
+
+config DDR_DEBUG
+	bool "ddr debug code"
+
+config EARLY_INIT_RUN
+	bool "early run init process"
+
+config TEST_RESET_DLL
+	bool "fast test reset_dll"
+
+config JZ_IMEM
+	bool "jz imem"
+	help
+	  Register two nodes:/proc/jz/imem and /proc/jz/imem1,
+	  The two node will take 16M and 8M memory space,
+	  Which is used such as by mplayer to encode and decode video and audio
+
+config PMON_DEBUG
+	bool "pmon debug proc interface"
+
+endif
