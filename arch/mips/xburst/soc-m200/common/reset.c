@@ -217,7 +217,7 @@ static int reset_proc_show(struct seq_file *m, void *v)
 
 static int reset_proc_open(struct inode *inode, struct file *file)
 {
-	return single_open(file, reset_proc_show, PDE_DATA(inode));
+	return single_open(file, reset_proc_show, pde_data(inode));
 }
 static int reset_write_proc(struct file *file, const char __user *buffer,
 			    size_t count, loff_t *data) {
@@ -286,7 +286,7 @@ return 0;
 
 static int wdt_control_proc_open(struct inode *inode, struct file *file)
 {
-	return single_open(file, wdt_control_proc_show, PDE_DATA(inode));
+	return single_open(file, wdt_control_proc_show, pde_data(inode));
 }
 
 static int wdt_control_write_proc(struct file *file, const char __user *buffer,
@@ -311,7 +311,7 @@ static int wdt_time_proc_show(struct seq_file *m, void *v)
 
 static int wdt_time_proc_open(struct inode *inode, struct file *file)
 {
-	return single_open(file, wdt_time_proc_show, PDE_DATA(inode));
+	return single_open(file, wdt_time_proc_show, pde_data(inode));
 }
 
 static int wdt_time_write_proc(struct file *file, const char __user *buffer,

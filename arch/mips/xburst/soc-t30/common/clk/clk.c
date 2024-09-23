@@ -375,17 +375,17 @@ static int rate_show(struct seq_file *m, void *v)
 
 static int clocks_open(struct inode *inode, struct file *file)
 {
-	return single_open_size(file, clocks_show, PDE_DATA(inode),8192);
+	return single_open_size(file, clocks_show, pde_data(inode),8192);
 }
 
 static int enable_open(struct inode *inode, struct file *file)
 {
-	return single_open(file, enable_show, PDE_DATA(inode));
+	return single_open(file, enable_show, pde_data(inode));
 }
 
 static int rate_open(struct inode *inode, struct file *file)
 {
-	return single_open(file, rate_show, PDE_DATA(inode));
+	return single_open(file, rate_show, pde_data(inode));
 }
 
 static const struct file_operations clocks_proc_fops ={

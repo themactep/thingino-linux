@@ -120,7 +120,7 @@ static int watch_write_proc(struct file *file, const char __user *buffer,
 
 static int watch_proc_open(struct inode *inode, struct file *file)
 {
-	return single_open(file, watch_proc_show, PDE_DATA(inode));
+	return single_open(file, watch_proc_show, pde_data(inode));
 }
 
 static const struct file_operations watch_proc_fops ={

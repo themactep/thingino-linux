@@ -326,7 +326,7 @@ static int cpu_switch_proc_show(struct seq_file *m, void *v)
 
 static int cpu_switch_proc_open(struct inode *inode, struct file *file)
 {
-	return single_open(file, cpu_switch_proc_show, PDE_DATA(inode));
+	return single_open(file, cpu_switch_proc_show, pde_data(inode));
 }
 
 static int cpu_switch_write_proc(struct file *file, const char __user *buffer,size_t count, loff_t *data)

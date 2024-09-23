@@ -166,7 +166,7 @@ static int ahbm_write(struct file *file, const char __user *buffer,
 
 static int ahbm_open(struct inode *inode, struct file *file)
 {
-	return single_open(file, ahbm_show, PDE_DATA(inode));
+	return single_open(file, ahbm_show, pde_data(inode));
 }
 
 static const struct file_operations ahbm_proc_fops ={

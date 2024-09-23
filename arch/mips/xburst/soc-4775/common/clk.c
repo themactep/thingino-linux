@@ -1133,7 +1133,7 @@ static int clk_write(struct file *file, const char __user *buffer,
 
 static int clocks_open(struct inode *inode, struct file *file)
 {
-	return single_open_size(file, clocks_show, PDE_DATA(inode),8192);
+	return single_open_size(file, clocks_show, pde_data(inode),8192);
 }
 
 static const struct file_operations clocks_proc_fops ={

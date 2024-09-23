@@ -305,22 +305,22 @@ static void timercount3(unsigned long data)
 
 static int ddr_register_proc_open(struct inode *inode, struct file *file)
 {
-	return single_open(file, dump_out_ddr, PDE_DATA(inode));
+	return single_open(file, dump_out_ddr, pde_data(inode));
 }
 
 static int ddr_mon1_proc_open(struct inode *inode, struct file *file)
 {
-	return single_open(file, ddr_mon1_proc_read, PDE_DATA(inode));
+	return single_open(file, ddr_mon1_proc_read, pde_data(inode));
 }
 
 static int ddr_mon2_proc_open(struct inode *inode, struct file *file)
 {
-	return single_open(file, ddr_mon2_proc_read, PDE_DATA(inode));
+	return single_open(file, ddr_mon2_proc_read, pde_data(inode));
 }
 
 static int ddr_mon3_proc_open(struct inode *inode, struct file *file)
 {
-	return single_open(file, ddr_mon3_proc_read, PDE_DATA(inode));
+	return single_open(file, ddr_mon3_proc_read, pde_data(inode));
 }
 
 static const struct file_operations ddr_register_proc_fops ={

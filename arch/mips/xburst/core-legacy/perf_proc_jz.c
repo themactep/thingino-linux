@@ -556,7 +556,7 @@ static int perform_write(struct file *file, const char __user *buffer,size_t cou
 
 static int perform_open(struct inode *inode, struct file *file)
 {
-	return single_open(file, perform_show, PDE_DATA(inode));
+	return single_open(file, perform_show, pde_data(inode));
 }
 
 static const struct file_operations perform_fops ={
